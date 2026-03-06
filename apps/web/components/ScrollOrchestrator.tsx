@@ -10,6 +10,7 @@ gsap.registerPlugin(ScrollTrigger);
 const SECTIONS: { id: string; name: ActiveSection }[] = [
     { id: 'hero-section', name: 'hero' },
     { id: 'how-it-works-section', name: 'howItWorks' },
+    { id: 'faq-section', name: 'faq' },
     { id: 'ecosystem-section', name: 'ecosystem' },
     { id: 'cta-section', name: 'cta' },
 ];
@@ -18,6 +19,7 @@ const SECTIONS: { id: string; name: ActiveSection }[] = [
 const SECTION_OPACITY: Record<ActiveSection, number> = {
     hero: 1.0,
     howItWorks: 0.5,
+    faq: 0.15, // Drop opacity low so it doesn't obstruct reading the FAQ cards
     ecosystem: 0.45,
     cta: 0.0,
 };

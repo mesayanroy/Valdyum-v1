@@ -20,20 +20,24 @@ import { useSceneStore } from '@valdyum/hooks';
 // Keyframes: [x, y, scale, rotationSpeedMultiplier]
 const KEYFRAMES = {
   hero: { x: 1.5, y: -1.5, scale: 1.4, rotSpeed: 0.12, tiltX: 0 },
-  howItWorks: { x: 0.0, y: 1.2, scale: 0.35, rotSpeed: 0.15, tiltX: 0.0 },
+  howItWorks: { x: 2.2, y: 1.2, scale: 0.35, rotSpeed: 0.15, tiltX: 0.0 },
+  faq: { x: 0.0, y: 0.0, scale: 0.45, rotSpeed: 0.05, tiltX: 0.05 }, // Drops softly to center bg
   ecosystem: { x: 0.0, y: -0.5, scale: 0.6, rotSpeed: 0.02, tiltX: 0.05 },
   cta: { x: 0.0, y: 1.0, scale: 0.0, rotSpeed: 0.5, tiltX: 0 },
 };
 
 // Map globalScrollProgress to a section + local progress within that section
 function getSectionProgress(globalProgress: number) {
+  // Global scroll boundaries must be compressed because Faq adds immense height
   const sections = [
-    { current: 'hero' as const, next: 'howItWorks' as const, start: 0.00, end: 0.15 },
-    { current: 'howItWorks' as const, next: 'howItWorks' as const, start: 0.15, end: 0.80 },
-    { current: 'howItWorks' as const, next: 'ecosystem' as const, start: 0.80, end: 0.85 },
-    { current: 'ecosystem' as const, next: 'ecosystem' as const, start: 0.85, end: 0.90 },
-    { current: 'ecosystem' as const, next: 'cta' as const, start: 0.90, end: 0.95 },
-    { current: 'cta' as const, next: 'cta' as const, start: 0.95, end: 1.00 },
+    { current: 'hero' as const, next: 'howItWorks' as const, start: 0.00, end: 0.12 },
+    { current: 'howItWorks' as const, next: 'howItWorks' as const, start: 0.12, end: 0.55 }, // Compressed from 0.80 down to 0.55
+    { current: 'howItWorks' as const, next: 'faq' as const, start: 0.55, end: 0.60 }, // Transition into FAQ
+    { current: 'faq' as const, next: 'faq' as const, start: 0.60, end: 0.80 }, // Resting state behind huge FAQ text
+    { current: 'faq' as const, next: 'ecosystem' as const, start: 0.80, end: 0.85 }, // Transition out of FAQ
+    { current: 'ecosystem' as const, next: 'ecosystem' as const, start: 0.85, end: 0.92 },
+    { current: 'ecosystem' as const, next: 'cta' as const, start: 0.92, end: 0.96 },
+    { current: 'cta' as const, next: 'cta' as const, start: 0.96, end: 1.00 },
   ];
 
   for (let i = sections.length - 1; i >= 0; i--) {
@@ -132,9 +136,9 @@ export const PrometheusScene = () => {
 
   return (
     <>
-      <directionalLight position={[5, 8, 3]} intensity={5} color="#fff5e6" />
-      <directionalLight position={[-4, 2, -3]} intensity={2.5} color="#d6d6ff" />
-      <ambientLight intensity={1.2} color="#ffffff" />
+      <directionalLight position={[5, 8, 3]} intensity={4} color="#ffffff" />
+      <directionalLight position={[-4, 2, -3]} intensity={2} color="#e0e0e0" />
+      <ambientLight intensity={2.5} color="#ffffff" />
 
       <group ref={groupRef} position={[1.5, -1.5, 0]}>
         <primitive object={scene} scale={1} />

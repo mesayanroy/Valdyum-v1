@@ -1,7 +1,7 @@
 import { create } from 'zustand';
 import { immer } from 'zustand/middleware/immer';
 
-export type ActiveSection = 'hero' | 'howItWorks' | 'ecosystem' | 'cta';
+export type ActiveSection = 'hero' | 'howItWorks' | 'faq' | 'ecosystem' | 'cta';
 
 export interface SceneState {
   // ── Global scroll (written by ScrollOrchestrator, read by Three.js) ─
