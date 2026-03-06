@@ -1,0 +1,174 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@import "../../../packages/ui-kit/src/styles/glass.css";
+@import "../../../packages/ui-kit/src/styles/neumorphism.css";
+@import "../../../packages/ui-kit/src/styles/claymorphism.css";
+@import "../../../packages/ui-kit/src/styles/aurora.css";
+
+:root {
+  --nav-height: 72px;
+  --section-pad: clamp(80px, 10vw, 140px);
+  --max-width: 1280px;
+}
+
+/* ── Lenis Smooth Scroll ── */
+html.lenis,
+html.lenis body {
+  height: auto;
+}
+
+.lenis.lenis-smooth {
+  scroll-behavior: auto !important;
+}
+
+.lenis.lenis-smooth [data-lenis-prevent] {
+  overscroll-behavior: contain;
+}
+
+.lenis.lenis-stopped {
+  overflow: hidden;
+}
+
+/* ── Base ── */
+body {
+  background-color: #FAFAFA;
+  color: #0A0A0A;
+  font-family: var(--font-geist), sans-serif;
+  overflow-x: clip;
+}
+
+::selection {
+  background-color: #0A0A0A;
+  color: #FAFAFA;
+}
+
+/* ── Film Grain Overlay ── */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: 9997;
+  pointer-events: none;
+  opacity: 0.025;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+  background-size: 200px 200px;
+}
+
+/* ── Scrollbar ── */
+::-webkit-scrollbar {
+  width: 3px;
+}
+
+::-webkit-scrollbar-track {
+  background: #F2EDE6;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #2A2A2A;
+}
+
+/* ── Scroll Reveal ── */
+.reveal {
+  opacity: 0;
+  transform: translateY(32px);
+  transition: opacity 0.7s ease, transform 0.7s ease;
+}
+
+.reveal.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.reveal-delay-1 {
+  transition-delay: 0.1s;
+}
+
+.reveal-delay-2 {
+  transition-delay: 0.2s;
+}
+
+.reveal-delay-3 {
+  transition-delay: 0.3s;
+}
+
+.reveal-delay-4 {
+  transition-delay: 0.4s;
+}
+
+/* ── Scroll Hint Pulse ── */
+@keyframes scroll-pulse {
+
+  0%,
+  100% {
+    opacity: 0.2;
+    transform: scaleY(1);
+  }
+
+  50% {
+    opacity: 0.6;
+    transform: scaleY(1.2);
+  }
+}
+
+.animate-scroll-pulse {
+  animation: scroll-pulse 2s ease-in-out infinite;
+  transform-origin: top;
+}
+
+/* ── Performance: will-change hints ── */
+.hero-char {
+  will-change: transform, opacity;
+}
+
+.stat-card {
+  will-change: transform, opacity;
+}
+
+.step-panel .step-inner {
+  will-change: transform;
+}
+
+.eco-cell {
+  will-change: transform;
+}
+
+.aurora-orb {
+  will-change: transform, opacity;
+}
+
+/* ── Elastic Hover Utility ── */
+.hover\:skewY-\[-0\.5deg\]:hover {
+  transform: scale(1.03) skewY(-0.5deg);
+}
+
+/* ── Focus Styles ── */
+input:focus-visible,
+button:focus-visible {
+  outline: 1px solid rgba(10, 10, 10, 0.3);
+  outline-offset: 2px;
+}
+
+/* ── Reduced Motion ── */
+@media (prefers-reduced-motion: reduce) {
+
+  .hero-char,
+  .stat-card,
+  .step-inner,
+  .eco-cell,
+  .reveal {
+    transition: none !important;
+    animation: none !important;
+    will-change: auto !important;
+  }
+
+  .animate-scroll-pulse {
+    animation: none !important;
+  }
+}
+
+/* ── Italic accent ── */
+em {
+  font-style: italic;
+}

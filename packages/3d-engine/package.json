@@ -1,0 +1,21 @@
+{
+  "name": "@valdyum/3d-engine",
+  "version": "0.0.1",
+  "private": true,
+  "main": "./src/index.ts",
+  "types": "./src/index.ts",
+  "dependencies": {
+    "@react-three/drei": "^9.92.0",
+    "@react-three/fiber": "^8.15.0",
+    "@valdyum/hooks": "workspace:*",
+    "gsap": "^3.12.0",
+    "three": "^0.160.0",
+    "zustand": "^4.5.0"
+  },
+  "devDependencies": {
+    "@types/react": "^18.2.0",
+    "@types/react-dom": "^18.2.0",
+    "@types/three": "^0.160.0",
+    "typescript": "^5.3.0"
+  }
+}

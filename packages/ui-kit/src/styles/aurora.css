@@ -1,0 +1,178 @@
+/* ═══════════════════════════════════════════
+   AURORA / CHROMAMORPHISM — Valdyum Design System
+   Atmospheric gradient mesh backgrounds
+   Max opacity: 6% per orb — sense, don't see
+   ═══════════════════════════════════════════ */
+
+@keyframes auroraFloat1 {
+
+    0%,
+    100% {
+        transform: translate(0, 0) scale(1);
+    }
+
+    33% {
+        transform: translate(3%, 2%) scale(1.05);
+    }
+
+    66% {
+        transform: translate(-2%, 3%) scale(0.97);
+    }
+}
+
+@keyframes auroraFloat2 {
+
+    0%,
+    100% {
+        transform: translate(0, 0) scale(1);
+    }
+
+    40% {
+        transform: translate(-4%, -2%) scale(1.08);
+    }
+
+    70% {
+        transform: translate(2%, -3%) scale(0.95);
+    }
+}
+
+@keyframes auroraFloat3 {
+
+    0%,
+    100% {
+        transform: translate(0, 0) scale(1);
+    }
+
+    50% {
+        transform: translate(3%, -4%) scale(1.04);
+    }
+}
+
+@keyframes auroraBreath {
+
+    0%,
+    100% {
+        opacity: 0.6;
+        transform: scale(0.95);
+    }
+
+    50% {
+        opacity: 1;
+        transform: scale(1.05);
+    }
+}
+
+@keyframes auroraVerifyPulse {
+    0% {
+        transform: scale(0.5);
+        opacity: 1;
+    }
+
+    100% {
+        transform: scale(2.5);
+        opacity: 0;
+    }
+}
+
+@keyframes forgePulse {
+
+    0%,
+    100% {
+        opacity: 1;
+    }
+
+    50% {
+        opacity: 0.55;
+    }
+}
+
+@keyframes pricingGlow {
+
+    0%,
+    100% {
+        transform: scale(0.9);
+        opacity: 0.06;
+    }
+
+    50% {
+        transform: scale(1.1);
+        opacity: 0.09;
+    }
+}
+
+/* ── Base Orb ── */
+
+.aurora-orb {
+    position: absolute;
+    border-radius: 50%;
+    pointer-events: none;
+    will-change: transform, opacity;
+}
+
+/* ── Animation Classes ── */
+
+.aurora-orb-1 {
+    animation: auroraFloat1 40s ease-in-out infinite;
+}
+
+.aurora-orb-2 {
+    animation: auroraFloat2 55s ease-in-out infinite;
+}
+
+.aurora-orb-3 {
+    animation: auroraFloat3 48s ease-in-out infinite;
+}
+
+.aurora-breath {
+    animation: auroraBreath 8s ease-in-out infinite;
+}
+
+.aurora-verify-pulse {
+    animation: auroraVerifyPulse 1.5s ease-out forwards;
+}
+
+.aurora-forge-pulse {
+    animation: forgePulse 1.5s ease-in-out infinite;
+}
+
+.aurora-pricing {
+    animation: pricingGlow 8s ease-in-out infinite;
+}
+
+/* ── Reduced Motion ── */
+
+[data-reduced-motion="true"] .aurora-orb,
+[data-reduced-motion="true"] .aurora-breath,
+[data-reduced-motion="true"] .aurora-forge-pulse,
+[data-reduced-motion="true"] .aurora-pricing {
+    animation: none !important;
+}
+
+/* ── Glass Fallbacks ── */
+
+[data-glass-supported="false"] .glass-light {
+    background: rgba(250, 248, 245, 0.97) !important;
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+}
+
+[data-glass-supported="false"] .glass-dark {
+    background: rgba(14, 12, 10, 0.97) !important;
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+}
+
+[data-glass-supported="false"] .glass-ichor {
+    background: rgba(0, 255, 102, 0.12) !important;
+    backdrop-filter: none !important;
+}
+
+[data-glass-supported="false"] .glass-electrum {
+    background: rgba(255, 215, 0, 0.10) !important;
+    backdrop-filter: none !important;
+}
+
+[data-glass-supported="false"] .glass-forge {
+    background: rgba(255, 59, 0, 0.12) !important;
+    backdrop-filter: none !important;
+}

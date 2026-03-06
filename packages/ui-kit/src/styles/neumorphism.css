@@ -1,0 +1,215 @@
+/* ═══════════════════════════════════════════════════════════════
+   NEUMORPHISM — Valdyum Design System
+   Angular neumorphism: zero border-radius
+   Light source: top-left (consistent across all components)
+
+   KEY RULE: Element bg MUST match parent bg exactly.
+   Obsidian surface = #0E0C0A  |  Alabaster surface = #FAF8F5
+   ═══════════════════════════════════════════════════════════════ */
+
+:root {
+    /* ── Dark surface (#0E0C0A obsidian) ── */
+    --neu-d-bg: #0E0C0A;
+    --neu-d-highlight: rgba(40, 35, 28, 0.65);
+    /* top-left: slightly lighter */
+    --neu-d-shadow: rgba(0, 0, 0, 0.9);
+    /* bottom-right: near-black  */
+
+    /* ── Light surface (#FAF8F5 alabaster) ── */
+    --neu-l-bg: #FAF8F5;
+    --neu-l-highlight: rgba(255, 255, 255, 0.85);
+    /* top-left: pure white     */
+    --neu-l-shadow: rgba(174, 166, 155, 0.45);
+    /* bottom-right: warm stone */
+
+    /* ── Shared ── */
+    --neu-transition: box-shadow 0.25s ease, transform 0.25s ease;
+}
+
+/* ══════════════════════════════════════════
+   DARK NEUMORPHISM (obsidian surfaces)
+   ══════════════════════════════════════════ */
+
+/* Raised from the surface — like a stone slab placed on obsidian */
+.neu-dark-raised {
+    background: var(--neu-d-bg);
+    box-shadow:
+        -6px -6px 12px var(--neu-d-highlight),
+        6px 6px 12px var(--neu-d-shadow);
+    transition: var(--neu-transition);
+}
+
+/* Deeper raised — more prominent extrusion */
+.neu-dark-raised-lg {
+    background: var(--neu-d-bg);
+    box-shadow:
+        -10px -10px 20px var(--neu-d-highlight),
+        10px 10px 20px var(--neu-d-shadow),
+        -4px -4px 8px rgba(36, 31, 24, 0.5),
+        4px 4px 8px rgba(0, 0, 0, 0.7);
+    transition: var(--neu-transition);
+}
+
+/* Sunken into the surface — like a carved pit */
+.neu-dark-sunken {
+    background: var(--neu-d-bg);
+    box-shadow:
+        inset -4px -4px 10px var(--neu-d-highlight),
+        inset 4px 4px 10px var(--neu-d-shadow);
+    transition: var(--neu-transition);
+}
+
+/* Deep sunken — terminal pit, input wells */
+.neu-dark-sunken-lg {
+    background: var(--neu-d-bg);
+    box-shadow:
+        inset -6px -6px 14px var(--neu-d-highlight),
+        inset 6px 6px 14px var(--neu-d-shadow),
+        inset -3px -3px 6px rgba(36, 31, 24, 0.4),
+        inset 3px 3px 6px rgba(0, 0, 0, 0.6);
+    transition: var(--neu-transition);
+}
+
+/* ── Dark Interaction States ── */
+
+.neu-dark-raised:hover {
+    box-shadow:
+        -10px -10px 22px var(--neu-d-highlight),
+        10px 10px 22px var(--neu-d-shadow),
+        -5px -5px 10px rgba(36, 31, 24, 0.5),
+        5px 5px 10px rgba(0, 0, 0, 0.7);
+    transform: translateY(-1px);
+}
+
+.neu-dark-raised:active,
+.neu-dark-press:active {
+    box-shadow:
+        inset -3px -3px 8px var(--neu-d-highlight),
+        inset 3px 3px 8px var(--neu-d-shadow);
+    transform: scale(0.99);
+}
+
+/* ── Dark Accent Glows ── */
+
+.neu-dark-glow-ichor {
+    background: var(--neu-d-bg);
+    box-shadow:
+        -6px -6px 12px var(--neu-d-highlight),
+        6px 6px 12px var(--neu-d-shadow),
+        0 0 0 1px rgba(0, 255, 102, 0.15),
+        0 0 24px rgba(0, 255, 102, 0.06);
+    transition: var(--neu-transition);
+}
+
+.neu-dark-glow-forge {
+    background: var(--neu-d-bg);
+    box-shadow:
+        -6px -6px 12px var(--neu-d-highlight),
+        6px 6px 12px var(--neu-d-shadow),
+        0 0 0 1px rgba(255, 59, 0, 0.15),
+        0 0 24px rgba(255, 59, 0, 0.06);
+    transition: var(--neu-transition);
+}
+
+.neu-dark-glow-ichor:hover {
+    box-shadow:
+        -10px -10px 20px var(--neu-d-highlight),
+        10px 10px 20px var(--neu-d-shadow),
+        0 0 0 1px rgba(0, 255, 102, 0.25),
+        0 0 32px rgba(0, 255, 102, 0.10);
+    transform: translateY(-1px);
+}
+
+.neu-dark-glow-forge:hover {
+    box-shadow:
+        -10px -10px 20px var(--neu-d-highlight),
+        10px 10px 20px var(--neu-d-shadow),
+        0 0 0 1px rgba(255, 59, 0, 0.25),
+        0 0 32px rgba(255, 59, 0, 0.10);
+    transform: translateY(-1px);
+}
+
+/* ══════════════════════════════════════════
+   LIGHT NEUMORPHISM (alabaster surfaces)
+   ══════════════════════════════════════════ */
+
+/* Raised from alabaster — like a marble tile */
+.neu-light-raised {
+    background: var(--neu-l-bg);
+    box-shadow:
+        -8px -8px 16px var(--neu-l-highlight),
+        8px 8px 16px var(--neu-l-shadow);
+    transition: var(--neu-transition);
+}
+
+/* Deep raised — pricing card prominence */
+.neu-light-raised-lg {
+    background: var(--neu-l-bg);
+    box-shadow:
+        -12px -12px 24px var(--neu-l-highlight),
+        12px 12px 24px var(--neu-l-shadow),
+        -6px -6px 12px rgba(255, 255, 255, 0.7),
+        6px 6px 12px rgba(174, 166, 155, 0.35);
+    transition: var(--neu-transition);
+}
+
+/* Raised with ichor accent — "pro" or "featured" variant */
+.neu-light-raised-pro {
+    background: var(--neu-l-bg);
+    box-shadow:
+        -14px -14px 28px var(--neu-l-highlight),
+        14px 14px 28px var(--neu-l-shadow),
+        -7px -7px 14px rgba(255, 255, 255, 0.7),
+        7px 7px 14px rgba(174, 166, 155, 0.35),
+        0 0 0 2px rgba(0, 255, 102, 0.12);
+    transition: var(--neu-transition);
+}
+
+/* Sunken into alabaster — input wells */
+.neu-light-sunken {
+    background: var(--neu-l-bg);
+    box-shadow:
+        inset -4px -4px 10px var(--neu-l-highlight),
+        inset 4px 4px 10px var(--neu-l-shadow);
+    transition: var(--neu-transition);
+}
+
+/* Focused input well — ichor ring */
+.neu-light-focus {
+    box-shadow:
+        inset -4px -4px 10px var(--neu-l-highlight),
+        inset 4px 4px 10px rgba(174, 166, 155, 0.35),
+        inset 0 0 0 1.5px rgba(0, 255, 102, 0.35),
+        inset 0 0 16px rgba(0, 255, 102, 0.04);
+}
+
+/* ── Light Interaction States ── */
+
+.neu-light-raised:hover {
+    box-shadow:
+        -12px -12px 22px var(--neu-l-highlight),
+        12px 12px 22px var(--neu-l-shadow),
+        -5px -5px 10px rgba(255, 255, 255, 0.6),
+        5px 5px 10px rgba(174, 166, 155, 0.3);
+    transform: translateY(-2px);
+}
+
+.neu-light-raised-lg:hover {
+    box-shadow:
+        -16px -16px 30px var(--neu-l-highlight),
+        16px 16px 30px var(--neu-l-shadow),
+        -8px -8px 16px rgba(255, 255, 255, 0.7),
+        8px 8px 16px rgba(174, 166, 155, 0.35);
+    transform: translateY(-3px);
+}
+
+.neu-light-raised-pro:hover {
+    box-shadow:
+        -18px -18px 34px var(--neu-l-highlight),
+        18px 18px 34px var(--neu-l-shadow),
+        -9px -9px 18px rgba(255, 255, 255, 0.7),
+        9px 9px 18px rgba(174, 166, 155, 0.35),
+        0 0 0 2px rgba(0, 255, 102, 0.18),
+        0 0 32px rgba(0, 255, 102, 0.08);
+    transform: translateY(-4px) scale(1.01);
+}

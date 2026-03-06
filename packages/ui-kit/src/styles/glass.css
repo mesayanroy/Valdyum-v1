@@ -1,0 +1,72 @@
+.glass-light {
+  background: rgba(250,248,245,0.65);
+  backdrop-filter: blur(16px) saturate(180%);
+  -webkit-backdrop-filter: blur(16px) saturate(180%);
+  border: 1px solid rgba(255,255,255,0.55);
+  border-bottom: 1px solid rgba(255,255,255,0.25);
+  border-right: 1px solid rgba(255,255,255,0.25);
+  box-shadow: 0 8px 32px rgba(10,10,10,0.08),
+              inset 0 1px 0 rgba(255,255,255,0.8);
+}
+
+.glass-dark {
+  background: rgba(14,12,10,0.60);
+  backdrop-filter: blur(20px) saturate(160%);
+  -webkit-backdrop-filter: blur(20px) saturate(160%);
+  border: 1px solid rgba(255,255,255,0.07);
+  border-bottom: 1px solid rgba(255,255,255,0.03);
+  box-shadow: 0 8px 32px rgba(0,0,0,0.35),
+              inset 0 1px 0 rgba(255,255,255,0.04);
+}
+
+.glass-ichor {
+  background: rgba(0,255,102,0.05);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(0,255,102,0.18);
+  box-shadow: 0 8px 32px rgba(0,255,102,0.08),
+              inset 0 1px 0 rgba(0,255,102,0.1),
+              0 0 0 1px rgba(0,255,102,0.04);
+}
+
+.glass-electrum {
+  background: rgba(255,215,0,0.04);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255,215,0,0.18);
+  box-shadow: 0 8px 32px rgba(255,215,0,0.08),
+              inset 0 1px 0 rgba(255,215,0,0.1);
+}
+
+.glass-forge {
+  background: rgba(255,59,0,0.05);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255,59,0,0.18);
+  box-shadow: 0 8px 32px rgba(255,59,0,0.08),
+              inset 0 1px 0 rgba(255,59,0,0.08);
+}
+
+.glass-edge-highlight::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 1px;
+  pointer-events: none;
+}
+
+.glass-edge-ichor::before {
+  background: linear-gradient(90deg,
+    transparent,
+    rgba(0,255,102,0.5) 30%,
+    rgba(0,255,102,0.5) 70%,
+    transparent);
+}
+
+.glass-edge-electrum::before {
+  background: linear-gradient(90deg,
+    transparent,
+    rgba(255,215,0,0.5) 30%,
+    rgba(255,215,0,0.5) 70%,
+    transparent);
+}
