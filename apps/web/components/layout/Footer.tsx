@@ -1,74 +1,42 @@
 'use client';
 
 import * as React from 'react';
-import { useRef, useEffect, useState } from 'react';
 
 export const Footer = () => {
-  const footerRef = useRef<HTMLElement>(null);
-  const brandRef = useRef<HTMLSpanElement>(null);
-  const copyrightRef = useRef<HTMLDivElement>(null);
-  const [scrollProgress, setScrollProgress] = useState(0);
-
-  useEffect(() => {
-    const handleScroll = () => {
-      if (!footerRef.current) return;
-
-      const rect = footerRef.current.getBoundingClientRect();
-      const windowH = window.innerHeight;
-
-      // Progress: 0 when footer top enters bottom of viewport → 1 when fully in view
-      const progress = Math.max(0, Math.min(1, 1 - rect.top / windowH));
-      setScrollProgress(progress);
-    };
-
-    window.addEventListener('scroll', handleScroll, { passive: true });
-    handleScroll();
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
-
-  // Derived values
-  const brandY = (1 - scrollProgress) * 80; // rises from 80px below
-  const brandOpacity = scrollProgress;
-  const copyrightOpacity = Math.max(0, (scrollProgress - 0.3) / 0.7);
-
   return (
     <footer
-      ref={footerRef}
       className="relative overflow-hidden"
-      style={{ background: '#0E0C0A' }}
+      style={{
+        background: '#0E0C0A',
+        /* Generous height: copyright + spacing + top ~60% of giant text */
+        paddingTop: 'clamp(60px, 8vw, 120px)',
+      }}
     >
-      {/* Copyright text */}
-      <div
-        ref={copyrightRef}
-        className="relative z-10 pt-32 pb-8 text-center"
-        style={{ opacity: copyrightOpacity }}
-      >
-        <p className="font-mono text-[10px] uppercase tracking-[0.2em] text-white/30 leading-relaxed">
+      {/* Copyright text — centered above the giant text */}
+      <div className="text-center mb-[clamp(40px, 5vw, 80px)]">
+        <p className="font-mono text-[10px] uppercase tracking-[0.2em] text-white/35 leading-relaxed">
           All Rights Reserved, 2025
           <br />
           Valdyum Protocol
         </p>
       </div>
 
-      {/* Giant cropped brand name — scroll-driven rise */}
+      {/* Giant brand text — positioned at bottom, bottom portion overflows and is clipped by footer */}
       <div
-        className="relative flex items-start justify-center pointer-events-none select-none"
+        className="relative w-full text-center pointer-events-none select-none overflow-hidden"
         aria-hidden="true"
         style={{
-          height: 'clamp(120px, 14vw, 220px)',
-          overflow: 'hidden',
+          /* Clip container: show ~60% of the letter height, hide bottom 40% */
+          height: 'clamp(100px, 12vw, 200px)',
         }}
       >
         <span
-          ref={brandRef}
-          className="font-display font-bold text-white whitespace-nowrap will-change-transform"
+          className="font-display font-bold whitespace-nowrap inline-block"
           style={{
-            fontSize: 'clamp(140px, 15vw, 280px)',
-            lineHeight: '0.85',
-            letterSpacing: '-0.02em',
-            transform: `translateY(${brandY}px)`,
-            opacity: brandOpacity,
-            transition: 'none',
+            fontSize: 'clamp(180px, 20vw, 380px)',
+            lineHeight: '0.78',
+            letterSpacing: '-0.03em',
+            color: '#FFFFFF',
           }}
         >
           VALDYUM

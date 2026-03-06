@@ -9,7 +9,6 @@ gsap.registerPlugin(ScrollTrigger);
 
 const SECTIONS: { id: string; name: ActiveSection }[] = [
     { id: 'hero-section', name: 'hero' },
-    { id: 'stats-section', name: 'stats' },
     { id: 'how-it-works-section', name: 'howItWorks' },
     { id: 'ecosystem-section', name: 'ecosystem' },
     { id: 'cta-section', name: 'cta' },
@@ -18,8 +17,7 @@ const SECTIONS: { id: string; name: ActiveSection }[] = [
 // Model opacity per section
 const SECTION_OPACITY: Record<ActiveSection, number> = {
     hero: 1.0,
-    stats: 0.55,
-    howItWorks: 0.3,
+    howItWorks: 0.5,
     ecosystem: 0.45,
     cta: 0.0,
 };
@@ -30,6 +28,11 @@ export const ScrollOrchestrator = () => {
     const tweenRef = useRef<gsap.core.Tween | null>(null);
 
     useEffect(() => {
+        // Force scroll to top on mount to prevent Next.js from preserving 
+        // scroll position and glitching GSAP's horizontal calculation
+        window.history.scrollRestoration = 'manual';
+        window.scrollTo(0, 0);
+
         const store = useSceneStore.getState();
 
         // 1. Global scroll progress

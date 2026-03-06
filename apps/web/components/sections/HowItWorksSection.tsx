@@ -5,6 +5,7 @@ import { useRef, useEffect, useState } from 'react';
 import { useGSAP } from '@gsap/react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { useSceneStore } from '@valdyum/hooks';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -69,6 +70,9 @@ export const HowItWorksSection = () => {
                 end: 'bottom bottom',
                 scrub: 1,
                 invalidateOnRefresh: true,
+                onUpdate: (self) => {
+                    useSceneStore.getState().setHowItWorksProgress(self.progress);
+                }
             },
         });
 
@@ -197,6 +201,9 @@ export const HowItWorksSection = () => {
                             </div>
                         </div>
                     ))}
+
+                    {/* Padding space so the final 4th card can scroll to the center of the screen */}
+                    <div className="w-[50vw] flex-shrink-0" />
                 </div>
             </div>
         </div>

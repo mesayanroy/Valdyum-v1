@@ -1,7 +1,7 @@
 import { create } from 'zustand';
 import { immer } from 'zustand/middleware/immer';
 
-export type ActiveSection = 'hero' | 'stats' | 'howItWorks' | 'ecosystem' | 'cta';
+export type ActiveSection = 'hero' | 'howItWorks' | 'ecosystem' | 'cta';
 
 export interface SceneState {
   // ── Global scroll (written by ScrollOrchestrator, read by Three.js) ─
@@ -13,6 +13,10 @@ export interface SceneState {
   // ── Legacy hero scroll (still used by HeroSection entrance) ─
   heroScrollProgress: number;
   setHeroScrollProgress: (v: number) => void;
+
+  // ── Local section progress ─
+  howItWorksProgress: number;
+  setHowItWorksProgress: (v: number) => void;
 
   // ── Camera ─
   cameraTarget: [number, number, number];
@@ -38,6 +42,9 @@ export const useSceneStore = create<SceneState>()(
 
     heroScrollProgress: 0,
     setHeroScrollProgress: (v) => set((state) => { state.heroScrollProgress = v; }),
+
+    howItWorksProgress: 0,
+    setHowItWorksProgress: (v) => set((state) => { state.howItWorksProgress = v; }),
 
     cameraTarget: [0, 0, 0],
     cameraFov: 45,

@@ -1,5 +1,4 @@
 import { HeroSection } from '../components/sections/HeroSection';
-import { StatsStrip } from '../components/sections/StatsStrip';
 import { HowItWorksSection } from '../components/sections/HowItWorksSection';
 import { EcosystemSection } from '../components/sections/EcosystemSection';
 import { CtaBanner } from '../components/sections/CtaBanner';
@@ -10,7 +9,6 @@ export default function Home() {
     <main className="w-full">
       <ScrollOrchestrator />
       <HeroSection />
-      <StatsStrip />
       <HowItWorksSection />
       <EcosystemSection />
       <CtaBanner />
