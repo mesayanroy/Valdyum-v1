@@ -4,3 +4,4 @@ export { useCountUp } from './useCountUp';
 export { useScrollProgress } from './useScrollProgress';
 export { useTypewriter } from './useTypewriter';
 export { useMorphism } from './useMorphism';
+export { useAgentData, type Agent } from './useAgentData';

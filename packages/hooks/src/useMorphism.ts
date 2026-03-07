@@ -45,17 +45,15 @@ const CLAY_STYLES = {
 } as const;
 
 export function useMorphism() {
-  const { currentPage } = useSceneStore();
-
   const getGlassStyle = (variant?: keyof typeof GLASS_STYLES) => {
     if (!variant) {
-      return currentPage === 'dashboard' ? GLASS_STYLES.dark : GLASS_STYLES.light;
+      return GLASS_STYLES.light;
     }
     return GLASS_STYLES[variant];
   };
 
   const getNeuStyle = (type: 'outset' | 'inset') => {
-    return currentPage === 'dashboard' ? NEU_STYLES.dark[type] : NEU_STYLES.light[type];
+    return NEU_STYLES.light[type];
   };
 
   const getClayStyle = (accent: keyof typeof CLAY_STYLES) => {
