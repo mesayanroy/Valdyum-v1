@@ -1,6 +1,86 @@
-# Valdyum — Full Product Description
+# Valdyum
+
+> Open-source AI infrastructure platform for building, deploying, and monetizing autonomous agents on Solana.
 
 ---
+
+## Getting Started
+
+### Prerequisites
+
+- **Node.js** ≥ 18
+- **pnpm** ≥ 8 — install with `npm install -g pnpm`
+
+### Clone & Install
+
+```bash
+git clone https://github.com/SATISH-JALAN/Valdyum-v1.git
+cd Valdyum-v1
+pnpm install
+```
+
+### Environment Variables
+
+Create a `.env.local` file inside **`apps/web/`**:
+
+```bash
+# apps/web/.env.local
+NEXT_PUBLIC_SUPABASE_URL=https://your-project.supabase.co
+NEXT_PUBLIC_SUPABASE_ANON_KEY=your-anon-key-here
+```
+
+> **Where to get these:** Go to [supabase.com](https://supabase.com) → your project → **Settings** → **API**. Copy the **Project URL** and the **anon/public** key.
+
+### Run Locally
+
+```bash
+pnpm run dev
+```
+
+The site will be available at **http://localhost:3000**.
+
+### Supabase Table Setup
+
+Run this in your Supabase **SQL Editor** to create the waitlist table:
+
+```sql
+CREATE TABLE waitlist (
+  id UUID DEFAULT gen_random_uuid() PRIMARY KEY,
+  email TEXT NOT NULL UNIQUE,
+  created_at TIMESTAMPTZ DEFAULT NOW()
+);
+
+ALTER TABLE waitlist ENABLE ROW LEVEL SECURITY;
+
+CREATE POLICY "Allow anonymous inserts" ON waitlist
+  FOR INSERT TO anon WITH CHECK (true);
+
+CREATE POLICY "Allow anonymous select" ON waitlist
+  FOR SELECT TO anon USING (true);
+```
+
+### Project Structure
+
+```
+Valdyum-v1/
+├── apps/
+│   └── web/                  # Next.js landing page
+│       ├── app/              # Pages, layout, API routes
+│       │   └── api/waitlist/ # Email collection endpoint
+│       ├── components/       # React components
+│       ├── lib/              # Supabase client
+│       ├── public/           # Static assets (logo, 3D model)
+│       └── .env.local        # ← Your env file goes here
+├── packages/
+│   ├── 3d-engine/            # Three.js / R3F persistent canvas
+│   ├── hooks/                # Zustand stores, shared hooks
+│   └── ui-kit/               # Design system, CSS styles
+└── package.json
+```
+
+---
+
+## Product Description
 
 ## What It Is
 
