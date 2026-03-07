@@ -6,15 +6,15 @@ const FOUNDERS = [
         name: 'Sayan Roy',
         title: 'FOUNDER',
         image: '/founder_avatar.png',
-        linkedin: '#',
-        x: '#'
+        linkedin: 'https://www.linkedin.com/in/mesayanroy/',
+        x: 'https://x.com/mesayanroy'
     },
     {
         name: 'Satish Jalan',
         title: 'CO-FOUNDER',
         image: '/founder_avatar.png',
-        linkedin: '#',
-        x: '#'
+        linkedin: 'https://www.linkedin.com/in/satish-jalan/',
+        x: 'https://x.com/SatishJalan52'
     }
 ];
 
