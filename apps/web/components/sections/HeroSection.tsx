@@ -232,11 +232,11 @@ export const HeroSection = () => {
         {/* Logo */}
         <a href="/" className="flex items-center gap-3 mb-16" aria-label="Valdyum Home">
           <Image
-            src="/logo.png"
+            src="/Valdyum-logo.png"
             alt="Valdyum Logo"
-            width={180}
-            height={50}
-            className="h-10 md:h-12 w-auto object-contain"
+            width={330}
+            height={100}
+            className="h-20 md:h-28 w-auto object-contain"
             priority
           />
         </a>
