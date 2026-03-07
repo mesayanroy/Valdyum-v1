@@ -7,14 +7,13 @@ export const Footer = () => {
     <footer
       className="relative overflow-hidden"
       style={{
-        background: '#FAFAFA',
-        /* Generous height: copyright + spacing + top ~60% of giant text */
-        paddingTop: 'clamp(60px, 8vw, 120px)',
+        background: '#0E0C0A',
+        paddingTop: 'clamp(40px, 8vw, 120px)',
       }}
     >
       {/* Copyright text — centered above the giant text */}
-      <div className="text-center mb-[clamp(40px, 5vw, 80px)]">
-        <p className="font-mono text-[10px] uppercase tracking-[0.2em] text-stone/40 leading-relaxed">
+      <div className="text-center mb-[clamp(24px,5vw,80px)]">
+        <p className="font-mono text-[10px] uppercase tracking-[0.2em] text-white/35 leading-relaxed">
           All Rights Reserved, 2025
           <br />
           Valdyum Protocol
@@ -26,17 +25,16 @@ export const Footer = () => {
         className="relative w-full text-center pointer-events-none select-none overflow-hidden"
         aria-hidden="true"
         style={{
-          /* Clip container: show ~60% of the letter height, hide bottom 40% */
-          height: 'clamp(100px, 12vw, 200px)',
+          height: 'clamp(50px, 12vw, 200px)',
         }}
       >
         <span
           className="font-display font-bold whitespace-nowrap inline-block"
           style={{
-            fontSize: 'clamp(180px, 20vw, 380px)',
+            fontSize: 'clamp(80px, 20vw, 380px)',
             lineHeight: '0.78',
             letterSpacing: '-0.03em',
-            color: '#0A0A0A',
+            color: '#FFFFFF',
           }}
         >
           VALDYUM

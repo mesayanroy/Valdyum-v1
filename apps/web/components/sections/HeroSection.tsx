@@ -5,6 +5,7 @@ import { useRef, useState, useEffect } from 'react';
 import { useGSAP } from '@gsap/react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import Image from 'next/image';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -74,18 +75,36 @@ const SplitChars = ({
 export const HeroSection = () => {
   const sectionRef = useRef<HTMLElement>(null);
   const [email, setEmail] = useState('');
-  const [submitted, setSubmitted] = useState(false);
+  const [status, setStatus] = useState<'idle' | 'loading' | 'success' | 'duplicate' | 'error'>('idle');
   const [mounted, setMounted] = useState(false);
 
   useEffect(() => setMounted(true), []);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (email) {
-      setSubmitted(true);
-      setEmail('');
-      setTimeout(() => setSubmitted(false), 3000);
+    if (!email || status === 'loading') return;
+
+    setStatus('loading');
+    try {
+      const res = await fetch('/api/waitlist', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email }),
+      });
+      const data = await res.json();
+
+      if (data.message === 'already_exists') {
+        setStatus('duplicate');
+      } else if (res.ok) {
+        setStatus('success');
+        setEmail('');
+      } else {
+        setStatus('error');
+      }
+    } catch {
+      setStatus('error');
     }
+    setTimeout(() => setStatus('idle'), 4000);
   };
 
   useGSAP(() => {
@@ -209,27 +228,23 @@ export const HeroSection = () => {
       </div>
 
       {/* Left side — Text content */}
-      <div className="relative z-10 flex flex-col items-start text-left pl-[clamp(24px,6vw,100px)] pr-6 max-w-[55%] py-12">
+      <div className="relative z-10 flex flex-col items-center text-center md:items-start md:text-left px-6 md:pl-[clamp(24px,6vw,100px)] md:pr-6 max-w-full md:max-w-[55%] py-12">
         {/* Logo */}
         <a href="/" className="flex items-center gap-3 mb-16" aria-label="Valdyum Home">
-          <div
-            className="flex h-[28px] w-[28px] items-center justify-center"
-            style={{
-              background: 'rgba(10,10,10,0.06)',
-              border: '1px solid rgba(10,10,10,0.1)',
-            }}
-          >
-            <span className="font-display text-[14px] font-bold text-obsidian">V</span>
-          </div>
-          <span className="font-display text-[14px] font-semibold tracking-[0.18em] text-obsidian">
-            VALDYUM
-          </span>
+          <Image
+            src="/logo.png"
+            alt="Valdyum Logo"
+            width={180}
+            height={50}
+            className="h-10 md:h-12 w-auto object-contain"
+            priority
+          />
         </a>
 
         {/* Eyebrow */}
         <div
           data-hero="eyebrow"
-          className="mb-8 font-mono text-[10px] uppercase tracking-[0.4em] text-stone/50"
+          className="mb-6 md:mb-8 font-mono text-[10px] uppercase tracking-[0.4em] text-stone/50"
         >
           Open-Source AI Infrastructure on Solana
         </div>
@@ -237,7 +252,7 @@ export const HeroSection = () => {
         {/* Headline — Kinetic char stagger */}
         <h1
           data-hero="headline"
-          className="mb-8 font-display text-[clamp(42px,6vw,88px)] font-bold leading-[0.92] tracking-[-0.02em] text-obsidian"
+          className="mb-6 md:mb-8 font-display text-[clamp(36px,6vw,88px)] font-bold leading-[0.92] tracking-[-0.02em] text-obsidian"
         >
           <SplitChars>
             Build <em className="font-normal italic text-stone/40">with</em> Agents.
@@ -251,7 +266,7 @@ export const HeroSection = () => {
         {/* Tagline */}
         <p
           data-hero="tagline"
-          className="mb-10 max-w-[44ch] font-body text-[clamp(14px,1.2vw,17px)] leading-[1.7] text-stone/60"
+          className="mb-8 md:mb-10 max-w-[44ch] font-body text-[clamp(14px,1.2vw,17px)] leading-[1.7] text-stone/60"
         >
           Deploy, verify, and monetize autonomous AI agents with cryptographic proof.
           Every execution is on-chain. Every agent has a soul.
@@ -265,7 +280,7 @@ export const HeroSection = () => {
         >
           <form
             onSubmit={handleSubmit}
-            className="flex w-full max-w-[420px] items-center gap-0"
+            className="flex w-full max-w-[420px] flex-col sm:flex-row items-stretch sm:items-center gap-0"
           >
             <input
               type="email"
@@ -277,16 +292,27 @@ export const HeroSection = () => {
             />
             <button
               type="submit"
-              className="whitespace-nowrap bg-obsidian px-7 py-3.5 font-mono text-[12px] uppercase tracking-[0.15em] text-alabaster transition-all hover:bg-obsidian/85 active:scale-[0.98]"
+              disabled={status === 'loading'}
+              className="whitespace-nowrap bg-obsidian px-7 py-3.5 font-mono text-[12px] uppercase tracking-[0.15em] text-alabaster transition-all hover:bg-obsidian/85 active:scale-[0.98] disabled:opacity-60 w-full sm:w-auto"
             >
-              {submitted ? '✓ Joined' : 'Join Waitlist'}
+              {status === 'loading' ? '...' : status === 'success' ? '✓ Joined' : 'Join Waitlist'}
             </button>
           </form>
         </div>
 
-        {submitted && (
+        {status === 'success' && (
           <p className="mt-3 font-mono text-[11px] text-ichor/70 tracking-wider">
             You&apos;re on the list. We&apos;ll be in touch.
+          </p>
+        )}
+        {status === 'duplicate' && (
+          <p className="mt-3 font-mono text-[11px] text-stone/50 tracking-wider">
+            You&apos;re already on the list!
+          </p>
+        )}
+        {status === 'error' && (
+          <p className="mt-3 font-mono text-[11px] text-red-500/70 tracking-wider">
+            Something went wrong. Please try again.
           </p>
         )}
       </div>
@@ -300,7 +326,7 @@ export const HeroSection = () => {
       {/* Scroll hint */}
       <div
         data-hero="scroll-hint"
-        className="absolute bottom-9 left-[clamp(24px,6vw,100px)] flex flex-col items-center gap-2 z-10"
+        className="absolute bottom-9 left-1/2 -translate-x-1/2 md:translate-x-0 md:left-[clamp(24px,6vw,100px)] flex flex-col items-center gap-2 z-10"
       >
         <div className="h-10 w-px animate-scroll-pulse bg-gradient-to-b from-stone/20 to-transparent" />
         <span className="font-mono text-[9px] uppercase tracking-[0.25em] text-stone/30">

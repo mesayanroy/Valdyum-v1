@@ -34,12 +34,12 @@ export const FaqSection = () => {
     return (
         <section
             id="faq-section"
-            className="relative z-10 w-full bg-alabaster py-48 px-6 md:px-12 lg:px-24"
+            className="relative z-10 w-full bg-alabaster py-20 md:py-48 px-6 md:px-12 lg:px-24"
         >
             <div className="max-w-[1400px] mx-auto flex flex-col items-center">
 
                 {/* Section Header */}
-                <div className="w-full max-w-4xl text-center mb-32">
+                <div className="w-full max-w-4xl text-center mb-16 md:mb-32">
                     <span className="inline-block py-1 px-3 rounded-full border border-stone/10 bg-white shadow-sm text-xs font-mono text-stone/50 tracking-widest uppercase mb-6">
                         Knowledge Base
                     </span>
@@ -49,7 +49,7 @@ export const FaqSection = () => {
                 </div>
 
                 {/* Sticky Stacking Cards Container */}
-                <div className="w-full max-w-4xl relative pb-48">
+                <div className="w-full max-w-4xl relative pb-24 md:pb-48">
                     {FAQS.map((faq, index) => {
                         // Calculate a staggered top offset so the cards neatly stack like a deck
                         // Assuming header height ~80px + a cascading gap of 40px per card

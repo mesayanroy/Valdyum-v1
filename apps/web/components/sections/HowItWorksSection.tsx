@@ -42,9 +42,19 @@ export const HowItWorksSection = () => {
     const progressBarRef = useRef<HTMLDivElement>(null);
     const [scrollWidth, setScrollWidth] = useState(0);
     const [windowHeight, setWindowHeight] = useState(0);
+    const [isMobile, setIsMobile] = useState(false);
 
-    // Measure track width
+    // Detect mobile
     useEffect(() => {
+        const checkMobile = () => setIsMobile(window.innerWidth < 768);
+        checkMobile();
+        window.addEventListener('resize', checkMobile);
+        return () => window.removeEventListener('resize', checkMobile);
+    }, []);
+
+    // Measure track width (desktop only)
+    useEffect(() => {
+        if (isMobile) return;
         const measure = () => {
             if (trackRef.current) {
                 const totalScroll = trackRef.current.scrollWidth - window.innerWidth;
@@ -55,10 +65,10 @@ export const HowItWorksSection = () => {
         measure();
         window.addEventListener('resize', measure);
         return () => window.removeEventListener('resize', measure);
-    }, []);
+    }, [isMobile]);
 
     useGSAP(() => {
-        if (!wrapperRef.current || !trackRef.current || scrollWidth <= 0) return;
+        if (isMobile || !wrapperRef.current || !trackRef.current || scrollWidth <= 0) return;
 
         // Horizontal scroll
         const tween = gsap.to(trackRef.current, {
@@ -122,7 +132,59 @@ export const HowItWorksSection = () => {
                 .filter((t) => wrapperRef.current?.contains(t.trigger as Node))
                 .forEach((t) => t.kill());
         };
-    }, { scope: wrapperRef, dependencies: [scrollWidth] });
+    }, { scope: wrapperRef, dependencies: [scrollWidth, isMobile] });
+
+    // ── Mobile: simple vertical layout ──
+    if (isMobile) {
+        return (
+            <div
+                id="how-it-works-section"
+                className="w-full py-16 px-6"
+                style={{ background: '#0E0C0A' }}
+            >
+                {/* Intro */}
+                <div className="mb-12">
+                    <span className="mb-4 block font-mono text-[10px] uppercase tracking-[0.4em] text-white/30">
+                        How It Works
+                    </span>
+                    <h2 className="font-display text-[clamp(32px,8vw,48px)] font-bold leading-[0.95] text-white">
+                        From Idea{' '}
+                        <em className="font-normal italic text-white/40">to</em>{' '}
+                        Income.
+                    </h2>
+                    <p className="mt-4 max-w-[380px] font-body text-[14px] leading-[1.7] text-white/40">
+                        Four steps to launch, verify, and monetize your agent on Solana.
+                    </p>
+                </div>
+
+                {/* Vertical cards */}
+                <div className="flex flex-col gap-6">
+                    {steps.map((step) => (
+                        <div
+                            key={step.number}
+                            className="neu-dark-raised p-8 w-full"
+                        >
+                            <span className="mb-4 block font-mono text-[11px] tracking-[0.3em] text-white/20">
+                                {step.number}
+                            </span>
+                            <span className="mb-3 inline-block neu-dark-glow-ichor px-3 py-1 font-mono text-[9px] uppercase tracking-[0.2em] text-white/50">
+                                {step.accent}
+                            </span>
+                            <h3 className="mb-4 font-display text-[28px] font-bold text-white">
+                                {step.title}
+                            </h3>
+                            <p className="font-body text-[13px] leading-[1.7] text-white/45">
+                                {step.description}
+                            </p>
+                            <div className="mt-6 h-px w-12 bg-white/10" />
+                        </div>
+                    ))}
+                </div>
+            </div>
+        );
+    }
+
+    // ── Desktop: horizontal scroll layout ──
 
     return (
         <div

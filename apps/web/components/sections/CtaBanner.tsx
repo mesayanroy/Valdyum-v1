@@ -12,15 +12,33 @@ export const CtaBanner = () => {
   const sectionRef = useRef<HTMLElement>(null);
   const watermarkRef = useRef<HTMLDivElement>(null);
   const [email, setEmail] = useState('');
-  const [submitted, setSubmitted] = useState(false);
+  const [status, setStatus] = useState<'idle' | 'loading' | 'success' | 'duplicate' | 'error'>('idle');
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (email) {
-      setSubmitted(true);
-      setEmail('');
-      setTimeout(() => setSubmitted(false), 3000);
+    if (!email || status === 'loading') return;
+
+    setStatus('loading');
+    try {
+      const res = await fetch('/api/waitlist', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email }),
+      });
+      const data = await res.json();
+
+      if (data.message === 'already_exists') {
+        setStatus('duplicate');
+      } else if (res.ok) {
+        setStatus('success');
+        setEmail('');
+      } else {
+        setStatus('error');
+      }
+    } catch {
+      setStatus('error');
     }
+    setTimeout(() => setStatus('idle'), 4000);
   };
 
   useGSAP(() => {
@@ -135,7 +153,7 @@ export const CtaBanner = () => {
           className="cta-form glass-light relative p-1"
           style={{ border: '1px solid rgba(10,10,10,0.06)' }}
         >
-          <form onSubmit={handleSubmit} className="flex w-full max-w-[420px] items-center gap-0">
+          <form onSubmit={handleSubmit} className="flex w-full max-w-[420px] flex-col sm:flex-row items-stretch sm:items-center gap-0">
             <input
               type="email"
               placeholder="name@email.com"
@@ -146,16 +164,27 @@ export const CtaBanner = () => {
             />
             <button
               type="submit"
-              className="whitespace-nowrap bg-obsidian px-7 py-3.5 font-mono text-[12px] uppercase tracking-[0.15em] text-alabaster transition-all hover:bg-obsidian/85 active:scale-[0.98]"
+              disabled={status === 'loading'}
+              className="whitespace-nowrap bg-obsidian px-7 py-3.5 font-mono text-[12px] uppercase tracking-[0.15em] text-alabaster transition-all hover:bg-obsidian/85 active:scale-[0.98] disabled:opacity-60 w-full sm:w-auto"
             >
-              {submitted ? '✓ Joined' : 'Join Waitlist'}
+              {status === 'loading' ? '...' : status === 'success' ? '✓ Joined' : 'Join Waitlist'}
             </button>
           </form>
         </div>
 
-        {submitted && (
+        {status === 'success' && (
           <p className="mt-3 font-mono text-[11px] text-stone/50 tracking-wider">
             You&apos;re on the list. We&apos;ll be in touch.
+          </p>
+        )}
+        {status === 'duplicate' && (
+          <p className="mt-3 font-mono text-[11px] text-stone/50 tracking-wider">
+            You&apos;re already on the list!
+          </p>
+        )}
+        {status === 'error' && (
+          <p className="mt-3 font-mono text-[11px] text-red-500/70 tracking-wider">
+            Something went wrong. Please try again.
           </p>
         )}
       </div>

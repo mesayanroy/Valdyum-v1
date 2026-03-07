@@ -11,7 +11,6 @@ const SECTIONS: { id: string; name: ActiveSection }[] = [
     { id: 'hero-section', name: 'hero' },
     { id: 'how-it-works-section', name: 'howItWorks' },
     { id: 'faq-section', name: 'faq' },
-    { id: 'ecosystem-section', name: 'ecosystem' },
     { id: 'cta-section', name: 'cta' },
 ];
 
@@ -21,7 +20,7 @@ const SECTION_OPACITY: Record<ActiveSection, number> = {
     howItWorks: 0.5,
     faq: 0.15, // Drop opacity low so it doesn't obstruct reading the FAQ cards
     ecosystem: 0.45,
-    cta: 0.0,
+    cta: 0.0,   // Fully vanish before Founders
 };
 
 export const ScrollOrchestrator = () => {
@@ -60,10 +59,12 @@ export const ScrollOrchestrator = () => {
             if (tweenRef.current) tweenRef.current.kill();
 
             // Tween a proxy object, write to store on each frame
+            const targetOpacity = SECTION_OPACITY[name];
+            const vanishDuration = targetOpacity === 0 ? 1.0 : 0.6; // Slower fade for vanishing
             tweenRef.current = gsap.to(opacityObjRef.current, {
-                value: SECTION_OPACITY[name],
-                duration: 0.6,
-                ease: 'power2.out',
+                value: targetOpacity,
+                duration: vanishDuration,
+                ease: targetOpacity === 0 ? 'power3.inOut' : 'power2.out',
                 onUpdate: () => {
                     store.setModelOpacity(opacityObjRef.current.value);
                 },

@@ -69,6 +69,18 @@ body::before {
   background: #2A2A2A;
 }
 
+/* Hide custom scrollbar on mobile — touch devices don't need it */
+@media (max-width: 767px) {
+  ::-webkit-scrollbar {
+    display: none;
+  }
+
+  body {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+}
+
 /* ── Scroll Reveal ── */
 .reveal {
   opacity: 0;

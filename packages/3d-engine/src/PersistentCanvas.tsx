@@ -29,7 +29,7 @@ export const PersistentCanvas = () => {
         zIndex: 2,
         pointerEvents: 'none',
         opacity: modelOpacity,
-        transition: 'opacity 0.15s ease',
+        transition: 'opacity 0.8s ease-in-out',
       }}
     >
       <Canvas
