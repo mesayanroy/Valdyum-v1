@@ -12,6 +12,16 @@ export const metadata: Metadata = {
     title: 'Valdyum — Forge Autonomous Agents on Solana',
     description:
         'The open-source infrastructure layer for building, deploying, monetizing, and forking AI agents with verifiable on-chain identity and execution history.',
+    icons: {
+        icon: [
+            { url: '/valdyum_fevicon.png', sizes: '32x32' },
+            { url: '/valdyum_fevicon.png', sizes: '192x192' },
+            { url: '/valdyum_fevicon.png', sizes: '512x512' },
+        ],
+        apple: [
+            { url: '/valdyum_fevicon.png', sizes: '180x180' },
+        ],
+    },
 };
 
 export default function RootLayout({
