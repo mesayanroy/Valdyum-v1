@@ -9,7 +9,7 @@ import { Footer } from '../components/layout/Footer';
 import './globals.css';
 
 export const metadata: Metadata = {
-    title: 'Valdyum — Forge Autonomous Agents on Solana',
+    title: 'Valdyum Labs — Automate Everything On-chain',
     description:
         'The open-source infrastructure layer for building, deploying, monetizing, and forking AI agents with verifiable on-chain identity and execution history.',
     icons: {
